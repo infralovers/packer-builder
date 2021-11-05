@@ -17,6 +17,6 @@ RUN apk add --no-cache ruby-dev ruby-bundler make gcc g++ libc-dev ansible-base 
     && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 RUN apk add gcc musl-dev python3-dev libffi-dev openssl-dev cargo make \
-    && pip install azure-cli
+    && pip3 install azure-cli
 
 ENTRYPOINT ["/bin/bash"]
