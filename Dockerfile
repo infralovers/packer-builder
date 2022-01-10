@@ -1,7 +1,7 @@
-ARG PACKER_VERSION=1.7.3
+ARG PACKER_VERSION=1.7.8
 FROM hashicorp/packer:$PACKER_VERSION
 
-ARG TERRAFORM_VERSION=1.0.10
+ARG TERRAFORM_VERSION=1.1.3
 
 RUN apk add --no-cach --quiet jq aws-cli gettext bash curl \
     && curl -sSL https://mondoo.io/download.sh | bash \
