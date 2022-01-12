@@ -3,7 +3,7 @@ FROM hashicorp/packer:$PACKER_VERSION
 
 ARG TERRAFORM_VERSION=1.0.11
 
-RUN apk add --no-cach --quiet jq aws-cli gettext bash curl \
+RUN apk add --no-cach --quiet jq aws-cli gettext bash curl yq \
     && curl -sSL https://mondoo.io/download.sh | bash \
     && mv mondoo /usr/local/bin/ \
     && mkdir -p ~/.packer.d/plugins \
