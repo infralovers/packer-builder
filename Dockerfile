@@ -10,7 +10,7 @@ FROM docker.io/mikefarah/yq:$YQ_VERSION as yq
 
 FROM docker.io/hashicorp/packer:$PACKER_VERSION
 
-RUN apk add --no-cache bash jq curl gettext ruby-dev ruby-bundler make gcc g++ libc-dev ansible-base musl-dev python3-dev py3-pip libffi-dev openssl-dev cargo
+RUN apk add --no-cache aws-cli bash jq curl gettext ruby-dev ruby-bundler make gcc g++ libc-dev ansible-base musl-dev python3-dev py3-pip libffi-dev openssl-dev cargo
 
 RUN mkdir -p ~/.packer.d/plugins \
     && curl https://releases.mondoo.io/packer-provisioner-mondoo/latest.json | jq -r '.files[] | select (.platform=="linux").filename' | xargs -n 1 curl | tar -xz > ~/.packer.d/plugins/packer-provisioner-mondoo \
