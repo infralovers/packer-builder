@@ -10,7 +10,7 @@ FROM docker.io/mikefarah/yq:$YQ_VERSION as yq
 
 FROM docker.io/hashicorp/packer:$PACKER_VERSION
 
-RUN apk add --no-cache bash jq curl ruby-dev ruby-bundler make gcc g++ libc-dev ansible-base musl-dev python3-dev py3-pip libffi-dev openssl-dev cargo
+RUN apk add --no-cache bash jq curl envsubst ruby-dev ruby-bundler make gcc g++ libc-dev ansible-base musl-dev python3-dev py3-pip libffi-dev openssl-dev cargo
 
 RUN mkdir -p ~/.packer.d/plugins \
     && curl https://releases.mondoo.io/packer-provisioner-mondoo/latest.json | jq -r '.files[] | select (.platform=="linux").filename' | xargs -n 1 curl | tar -xz > ~/.packer.d/plugins/packer-provisioner-mondoo \
@@ -20,6 +20,6 @@ COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 COPY --from=mondoo /usr/local/bin/mondoo /usr/local/bin/mondoo
 COPY --from=tf /bin/terraform /usr/local/bin/terraform
 
-RUN pip3 install azure-cli envsubst
+RUN pip3 install azure-cli
 
 ENTRYPOINT ["/bin/bash"]
