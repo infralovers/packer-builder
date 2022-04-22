@@ -20,6 +20,6 @@ COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 COPY --from=mondoo /usr/local/bin/mondoo /usr/local/bin/mondoo
 COPY --from=tf /bin/terraform /usr/local/bin/terraform
 
-RUN pip3 install azure-cli
+RUN pip3 install azure-cli envsubst
 
 ENTRYPOINT ["/bin/bash"]
