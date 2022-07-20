@@ -18,6 +18,7 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         changelog-file: CHANGELOG.md
+        changelog-generator-opt: "emojis=true"
 
     - name: Prepare Dockerhub
       id: prep
