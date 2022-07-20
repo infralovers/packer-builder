@@ -18,7 +18,6 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         changelog-file: CHANGELOG.md
-        changelog-generator-opt: "emojis=true"
 
     - name: Prepare Dockerhub
       id: prep
@@ -75,3 +74,10 @@ jobs:
           file: ./Dockerfile
           push: ${{ github.event_name != 'pull_request' && steps.semrel.outputs.version != '' }}
           tags: ${{ steps.prep.outputs.tags }}
+
+    - name: Update changelog
+      uses: stefanzweifel/git-auto-commit-action@v4
+      if: github.event_name != 'pull_request' && steps.semrel.outputs.version != ''
+      with:
+        commit_message: 'chore(ci): commit changes from go-semantic-release'
+        file_pattern: CHANGELOG.md
