@@ -43,7 +43,6 @@ jobs:
         if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
           TAGS="$TAGS,${QUAY_IMAGE}:latest,${HUB_IMAGE}:latest"
         fi
-        echo $TAGS
         echo ::set-output name=tags::${TAGS}
 
     - name: Set up Docker Buildx
