@@ -24,8 +24,8 @@ jobs:
       run: |
         DOCKER_IMAGE=infralovers/packer-builder
         VERSION=latest
-        if [[ $steps.semrel.outputs.version  != '' ]]; then
-          VERSION=$steps.semrel.outputs.version
+        if [[ ${{ steps.semrel.outputs.version }}  != '' ]]; then
+          VERSION=${{ steps.semrel.outputs.version }}
         fi
         if [ "${{ github.event_name }}" = "schedule" ]; then
           VERSION=nightly
@@ -42,8 +42,8 @@ jobs:
       run: |
         DOCKER_IMAGE=quay.io/infralovers/packer-builder
         VERSION=latest
-        if [[ $steps.semrel.outputs.version  != '' ]]; then
-          VERSION=$steps.semrel.outputs.version
+        if [[ ${{ steps.semrel.outputs.version }}  != '' ]]; then
+          VERSION=${{ steps.semrel.outputs.version }}
         fi
         if [ "${{ github.event_name }}" = "schedule" ]; then
           VERSION=nightly
