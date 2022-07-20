@@ -32,7 +32,7 @@ jobs:
         fi
         HUB_IMAGE="$IMAGE_REPO/$IMAGE_NAME"
         QUAY_IMAGE="quay.io/$IMAGE_REPO/$IMAGE_NAME"
-        VERSION=latest
+        VERSION=dev
         if [[ '${{ steps.semrel.outputs.version }}'  != '' ]]; then
           VERSION=${{ steps.semrel.outputs.version }}
         fi
