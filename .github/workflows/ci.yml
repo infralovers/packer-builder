@@ -19,11 +19,18 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         changelog-file: CHANGELOG.md
 
-    - name: Prepare Dockerhub
+    - name: Prepare tagging
       id: prep
       run: |
-        HUB_IMAGE="${{ github.repository_owner }}/$(basename ${{ github.repository }})"
-        QUAY_IMAGE="quay.io/${{ github.repository_owner }}/$(basename ${{ github.repository }})"
+        IMAGE_NAME=$(basename ${{ github.repository }})
+        if [[ -n "${{ secrets.IMAGE_NAME }}" ]]; then
+          IMAGE_NAME="${{ secrets.IMAGE_NAME }}"
+        fi
+        if [[ -n "${{ secrets.IMAGE_REPO }}" ]]; then
+          IMAGE_NAME="${{ secrets.IMAGE_REPO }}"
+        fi
+        HUB_IMAGE="${{ github.repository_owner }}/$IMAGE_NAME"
+        QUAY_IMAGE="quay.io/${{ github.repository_owner }}/$IMAGE_NAME"
         VERSION=latest
         if [[ '${{ steps.semrel.outputs.version }}'  != '' ]]; then
           VERSION=${{ steps.semrel.outputs.version }}
