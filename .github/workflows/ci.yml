@@ -23,14 +23,15 @@ jobs:
       id: prep
       run: |
         IMAGE_NAME=$(basename ${{ github.repository }})
+        IMAGE_REPO=${{ github.repository_owner }}
         if [[ -n "${{ secrets.IMAGE_NAME }}" ]]; then
           IMAGE_NAME="${{ secrets.IMAGE_NAME }}"
         fi
         if [[ -n "${{ secrets.IMAGE_REPO }}" ]]; then
-          IMAGE_NAME="${{ secrets.IMAGE_REPO }}"
+          IMAGE_REPO="${{ secrets.IMAGE_REPO }}"
         fi
-        HUB_IMAGE="${{ github.repository_owner }}/$IMAGE_NAME"
-        QUAY_IMAGE="quay.io/${{ github.repository_owner }}/$IMAGE_NAME"
+        HUB_IMAGE="$IMAGE_REPO/$IMAGE_NAME"
+        QUAY_IMAGE="quay.io/$IMAGE_REPO/$IMAGE_NAME"
         VERSION=latest
         if [[ '${{ steps.semrel.outputs.version }}'  != '' ]]; then
           VERSION=${{ steps.semrel.outputs.version }}
@@ -42,6 +43,7 @@ jobs:
         if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
           TAGS="$TAGS,${QUAY_IMAGE}:latest,${HUB_IMAGE}:latest"
         fi
+        echo $TAGS
         echo ::set-output name=tags::${TAGS}
 
     - name: Set up Docker Buildx
