@@ -38,12 +38,6 @@ jobs:
         fi
         echo ::set-output name=tags::${TAGS}
 
-    - name: Combine tags
-      id: prep
-      run: |
-        TAGS="${{ steps.prep_quay.outputs.tags }}:${{ steps.prep_hub.outputs.tags }}"
-        echo ::set-output name=tags::${TAGS}
-
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
