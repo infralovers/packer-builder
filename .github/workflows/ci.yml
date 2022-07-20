@@ -1,5 +1,4 @@
-name: quay-main
-
+name: dockerhub-main
 
 on:
   push:
@@ -11,8 +10,26 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Prepare
-      id: prep
+    - name: Prepare Dockerhub
+      id: prep_hub
+      run: |
+        DOCKER_IMAGE=infralovers/packer-builder
+        VERSION=latest
+        if [[ $GITHUB_REF == refs/tags/* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/v}
+        fi
+        if [ "${{ github.event_name }}" = "schedule" ]; then
+          VERSION=nightly
+        fi
+        TAGS="${DOCKER_IMAGE}:${VERSION}"
+        if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+          TAGS="$TAGS,${DOCKER_IMAGE}:latest"
+        fi
+        echo ::set-output name=tags::${TAGS}
+
+
+    - name: Prepare Quay
+      id: prep_quay
       run: |
         DOCKER_IMAGE=quay.io/infralovers/packer-builder
         VERSION=latest
@@ -44,18 +61,25 @@ jobs:
       if: github.event_name != 'pull_request'
       uses: docker/login-action@v1
       with:
-        registry: quay.io
-        username: ${{ secrets.QUAY_USER }}
-        password: ${{ secrets.QUAY_TOKEN }}
+        username: ${{ secrets.DOCKERHUB_USER }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-
-    - name: Build and push
-      id: docker_build
+    - name: Dockerhub - Build and push
+      id: docker_build_hub
       uses: docker/build-push-action@v2
       with:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.prep.outputs.tags }}
+          tags: ${{ steps.prep_hub.outputs.tags }}
 
+    - name: Quay - Build and push
+      id: docker_build_quay
+      uses: docker/build-push-action@v2
+      with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.prep_quay.outputs.tags }}
