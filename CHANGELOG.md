@@ -1,10 +1,10 @@
-## 1.1.0 (2022-07-20)
+## 1.1.1 (2022-09-21)
 
-#### Feature
+#### Bug Fixes
 
-* dynamic container naming (#10) (d75366d1)
+* add a Readme and fake a semantic version push (df875690)
 
 #### Chores
 
-* **ci:** commit changes from go-semantic-release (9f48b6a8)
+* **ci:** commit changes from go-semantic-release (4385c5fa)
 
