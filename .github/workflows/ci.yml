@@ -1,28 +1,34 @@
-name: ci
+name: Infralovers Container Build
 
 on:
   push:
-    branches: [ 'main' ]
+    branches: [ '"main"' ]
   pull_request:
-    branches:
-      - main
+    branches: [ '"main"' ]
 
 jobs:
+  prebuild:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.semrel.outputs.version }}
+    steps:
+    - uses: go-semantic-release/action@v1
+      if: github.event_name != 'pull_request'
+      id: semrel
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        prepend: true
+        dry: true
+
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
-    - uses: go-semantic-release/action@v1
-      id: semrel
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        changelog-file: CHANGELOG.md
-
     - name: Prepare tagging
       id: prep
       run: |
-        IMAGE_NAME=$(basename ${{ github.repository }})
+        IMAGE_NAME="${{ matrix.baseimage }}-behave"
         IMAGE_REPO=${{ github.repository_owner }}
         if [[ -n "${{ secrets.IMAGE_NAME }}" ]]; then
           IMAGE_NAME="${{ secrets.IMAGE_NAME }}"
@@ -30,19 +36,20 @@ jobs:
         if [[ -n "${{ secrets.IMAGE_REPO }}" ]]; then
           IMAGE_REPO="${{ secrets.IMAGE_REPO }}"
         fi
-        HUB_IMAGE="$IMAGE_REPO/$IMAGE_NAME"
+        HUB_IMAGE="docker.io/$IMAGE_REPO/$IMAGE_NAME"
         QUAY_IMAGE="quay.io/$IMAGE_REPO/$IMAGE_NAME"
-        VERSION=dev
-        if [[ '${{ steps.semrel.outputs.version }}'  != '' ]]; then
-          VERSION=${{ steps.semrel.outputs.version }}
+        VERSION="${{ matrix.baseversion}}-dev"
+        if [[ '${{ needs.prebuild.outputs.version }}'  != '' ]]; then
+          VERSION="${{ matrix.baseversion}}"
         fi
         if [ "${{ github.event_name }}" = "schedule" ]; then
-          VERSION=nightly
+          VERSION="${{ matrix.baseversion}}-nightly"
         fi
         TAGS="${QUAY_IMAGE}:${VERSION},${HUB_IMAGE}:${VERSION}"
         if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
           TAGS="$TAGS,${QUAY_IMAGE}:latest,${HUB_IMAGE}:latest"
         fi
+        echo "settings tag ${TAGS}"
         echo ::set-output name=tags::${TAGS}
 
     - name: Set up Docker Buildx
@@ -58,14 +65,14 @@ jobs:
           ${{ runner.os }}-buildx-
 
     - name: Login to DockerHub
-      if: github.event_name != 'pull_request' && steps.semrel.outputs.version != ''
+      if: needs.prebuild.outputs.version != ''
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Login to Quay
-      if: github.event_name != 'pull_request' && steps.semrel.outputs.version != ''
+      if: needs.prebuild.outputs.version != ''
       uses: docker/login-action@v1
       with:
         registry: quay.io
@@ -79,12 +86,26 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          push: ${{ github.event_name != 'pull_request' && steps.semrel.outputs.version != '' }}
+          push: ${{ github.event_name != 'pull_request' && needs.prebuild.outputs.version != '' }}
           tags: ${{ steps.prep.outputs.tags }}
+
+  release:
+    needs: [ prebuild, build ]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: go-semantic-release/action@v1
+      if: needs.prebuild.outputs.version != ''
+      id: generate_changelog
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        prepend: true
+        changelog-file: CHANGELOG.md
 
     - name: Update changelog
       uses: stefanzweifel/git-auto-commit-action@v4
-      if: github.event_name != 'pull_request' && steps.semrel.outputs.version != ''
+      if: steps.generate_changelog.outputs.version != ''
       with:
         commit_message: 'chore(ci): commit changes from go-semantic-release'
         file_pattern: CHANGELOG.md
