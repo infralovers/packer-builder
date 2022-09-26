@@ -38,12 +38,12 @@ jobs:
         fi
         HUB_IMAGE="docker.io/$IMAGE_REPO/$IMAGE_NAME"
         QUAY_IMAGE="quay.io/$IMAGE_REPO/$IMAGE_NAME"
-        VERSION="${{ matrix.baseversion}}-dev"
+        VERSION="dev"
         if [[ '${{ needs.prebuild.outputs.version }}'  != '' ]]; then
-          VERSION="${{ matrix.baseversion}}"
+          VERSION="${{ needs.prebuild.outputs.version }}"
         fi
         if [ "${{ github.event_name }}" = "schedule" ]; then
-          VERSION="${{ matrix.baseversion}}-nightly"
+          VERSION="nightly"
         fi
         TAGS="${QUAY_IMAGE}:${VERSION},${HUB_IMAGE}:${VERSION}"
         if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
