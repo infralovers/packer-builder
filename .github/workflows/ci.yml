@@ -28,7 +28,7 @@ jobs:
     - name: Prepare tagging
       id: prep
       run: |
-        IMAGE_NAME="${{ matrix.baseimage }}-behave"
+        IMAGE_NAME=$(basename ${{ github.repository }})
         IMAGE_REPO=${{ github.repository_owner }}
         if [[ -n "${{ secrets.IMAGE_NAME }}" ]]; then
           IMAGE_NAME="${{ secrets.IMAGE_NAME }}"
