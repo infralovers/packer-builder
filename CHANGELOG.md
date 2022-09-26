@@ -1,3 +1,10 @@
+## 1.1.3 (2022-09-26)
+
+#### Bug Fixes
+
+* changelog update failed (db603b1a)
+
+
 ## 1.1.1 (2022-09-21)
 
 #### Bug Fixes
