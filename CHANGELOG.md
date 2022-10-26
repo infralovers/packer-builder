@@ -1,3 +1,14 @@
+## 1.3.0 (2022-10-26)
+
+#### Feature
+
+* add pre-commit and bump versions (#13) (9d4f0f05)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (cc249278)
+
+
 ## 1.2.0 (2022-09-28)
 
 #### Feature
