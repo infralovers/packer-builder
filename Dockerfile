@@ -17,6 +17,7 @@ FROM docker.io/hashicorp/packer:$PACKER_VERSION
 RUN apk add --no-cache aws-cli bash git jq curl gettext ruby-dev ruby-bundler make gcc g++ libc-dev ansible musl-dev python3-dev py3-pip py3-ruamel.yaml py3-tomli libffi-dev openssl-dev cargo
 
 # Terraform docs
+# hadolint ignore=DL4006
 RUN if [ "$TERRAFORM_DOCS_VERSION" != "false" ]; then \
     ( \
         TERRAFORM_DOCS_RELEASES="https://api.github.com/repos/terraform-docs/terraform-docs/releases" && \
@@ -26,6 +27,7 @@ RUN if [ "$TERRAFORM_DOCS_VERSION" != "false" ]; then \
     ; fi
 
 # TFLint
+# hadolint ignore=DL4006
 RUN if [ "$TFLINT_VERSION" != "false" ]; then \
     ( \
         TFLINT_RELEASES="https://api.github.com/repos/terraform-linters/tflint/releases" && \
@@ -35,6 +37,7 @@ RUN if [ "$TFLINT_VERSION" != "false" ]; then \
     ; fi
 
 # TFSec
+# hadolint ignore=DL4006
 RUN if [ "$TFSEC_VERSION" != "false" ]; then \
     ( \
         TFSEC_RELEASES="https://api.github.com/repos/aquasecurity/tfsec/releases" && \
