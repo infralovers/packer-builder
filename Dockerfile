@@ -17,7 +17,7 @@ FROM docker.io/hashicorp/terraform:$TERRAFORM_VERSION as tf
 
 
 # hadolint ignore=DL3018
-RUN apk add --no-cache aws-cli bash git jq curl gettext ruby-dev ruby-bundler make gcc g++ libc-dev ansible musl-dev python3-dev py3-pip py3-ruamel.yaml py3-tomli libffi-dev openssl-dev cargo
+RUN apk add --no-cache perl aws-cli bash git jq curl gettext ruby-dev ruby-bundler make gcc g++ libc-dev ansible musl-dev python3-dev py3-pip py3-ruamel.yaml py3-tomli libffi-dev openssl-dev cargo
 
 COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 COPY --from=mondoo /usr/local/bin/mondoo /usr/local/bin/mondoo
