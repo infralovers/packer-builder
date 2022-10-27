@@ -1,3 +1,14 @@
+## 1.3.1 (2022-10-27)
+
+#### Bug Fixes
+
+* add missing executables for terraform pre-commit (#14) (3b5be423)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (89ca09d2)
+
+
 ## 1.3.0 (2022-10-26)
 
 #### Feature
