@@ -1,3 +1,14 @@
+## 1.3.2 (2022-10-27)
+
+#### Bug Fixes
+
+* add missing terraform-docs dependency perl (#15) (09b7924b)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (721e3e08)
+
+
 ## 1.3.1 (2022-10-27)
 
 #### Bug Fixes
