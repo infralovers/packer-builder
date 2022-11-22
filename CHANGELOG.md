@@ -1,3 +1,14 @@
+## 1.4.1 (2022-11-22)
+
+#### Bug Fixes
+
+* adding multi arch support (#17) (5c1b26cb)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (c035ba96)
+
+
 ## 1.4.0 (2022-11-22)
 
 #### Feature
