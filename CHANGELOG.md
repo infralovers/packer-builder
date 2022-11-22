@@ -1,3 +1,14 @@
+## 1.4.0 (2022-11-22)
+
+#### Feature
+
+* ghcr-support (#16) (a86e58e3)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (3a6c8c5f)
+
+
 ## 1.3.2 (2022-10-27)
 
 #### Bug Fixes
