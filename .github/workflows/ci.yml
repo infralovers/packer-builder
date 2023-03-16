@@ -53,7 +53,6 @@ jobs:
         if [[ -n "${{ secrets.IMAGE_REPO }}" ]]; then
           IMAGE_REPO="${{ secrets.IMAGE_REPO }}"
         fi
-        HUB_IMAGE="docker.io/$IMAGE_REPO/$IMAGE_NAME"
         QUAY_IMAGE="quay.io/$IMAGE_REPO/$IMAGE_NAME"
         GHCR_IMAGE="ghcr.io/${{ github.repository }}"
         VERSION="dev"
@@ -63,9 +62,9 @@ jobs:
         if [ "${{ github.event_name }}" = "schedule" ]; then
           VERSION="nightly"
         fi
-        TAGS="${QUAY_IMAGE}:${VERSION},${HUB_IMAGE}:${VERSION},${GHCR_IMAGE}:${VERSION}"
+        TAGS="${QUAY_IMAGE}:${VERSION},${GHCR_IMAGE}:${VERSION}"
         if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-          TAGS="$TAGS,${QUAY_IMAGE}:latest,${HUB_IMAGE}:latest,${GHCR_IMAGE}:latest"
+          TAGS="$TAGS,${QUAY_IMAGE}:latest,${GHCR_IMAGE}:latest"
         fi
         echo "settings tag ${TAGS}"
         echo "tags=${TAGS}" >> $GITHUB_OUTPUT
@@ -86,13 +85,6 @@ jobs:
         key: ${{ runner.os }}-buildx-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-buildx-
-
-    - name: Login to DockerHub
-      if: needs.prebuild.outputs.version != ''
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USER }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Login to Quay
       if: needs.prebuild.outputs.version != ''
