@@ -1,3 +1,14 @@
+## 1.4.2 (2023-03-16)
+
+#### Bug Fixes
+
+* use default template on container building (#18) (858f7e32)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (254371be)
+
+
 ## 1.4.1 (2022-11-22)
 
 #### Bug Fixes
