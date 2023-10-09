@@ -1,3 +1,14 @@
+## 1.4.3 (2023-10-09)
+
+#### Bug Fixes
+
+* version updates (#19) (416b28d8)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (47c135d4)
+
+
 ## 1.4.2 (2023-03-16)
 
 #### Bug Fixes
