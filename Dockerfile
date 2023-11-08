@@ -27,7 +27,7 @@ COPY --from=packer /bin/packer /usr/local/bin/packer
 COPY --from=tfdocs /usr/local/bin/terraform-docs /usr/local/bin/terraform-docs
 COPY --from=tflint /usr/local/bin/tflint /usr/local/bin/tflint
 COPY --from=tfsec /usr/bin/tfsec /usr/local/bin/tfsec
-COPY --from=vault /usr/local/bin/vault /usr/local/bin/vault
+COPY --from=vault /bin/vault /usr/local/bin/vault
 
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir azure-cli pre-commit
