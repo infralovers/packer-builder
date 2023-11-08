@@ -1,3 +1,14 @@
+## 1.4.4 (2023-11-08)
+
+#### Bug Fixes
+
+* adding vault (#20) (a6c0b232)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (faedd9ff)
+
+
 ## 1.4.3 (2023-10-09)
 
 #### Bug Fixes
