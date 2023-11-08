@@ -13,7 +13,7 @@ FROM docker.io/mikefarah/yq:$YQ_VERSION as yq
 FROM quay.io/terraform-docs/terraform-docs:$TERRAFORM_DOCS_VERSION as tfdocs
 FROM ghcr.io/terraform-linters/tflint:$TFLINT_VERSION as tflint
 FROM docker.io/aquasec/tfsec-alpine:$TFSEC_VERSION as tfsec
-FROM docker.io/hashicorp/vault:${VAULT_VERSION} as vault 
+FROM docker.io/hashicorp/vault:${VAULT_VERSION} as vault
 
 FROM docker.io/hashicorp/terraform:$TERRAFORM_VERSION as tf
 
