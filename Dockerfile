@@ -32,4 +32,8 @@ COPY --from=vault /bin/vault /usr/local/bin/vault
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir azure-cli pre-commit
 
+RUN addgroup -S build && adduser -S build -G build
+
+USER build
+
 ENTRYPOINT ["/bin/bash"]
