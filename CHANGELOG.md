@@ -1,3 +1,14 @@
+## 1.5.0 (2023-11-09)
+
+#### Feature
+
+* not run as root (#21) (8101f974)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (ee7b3018)
+
+
 ## 1.4.4 (2023-11-08)
 
 #### Bug Fixes
