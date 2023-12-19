@@ -1,3 +1,14 @@
+## 1.6.0 (2023-12-19)
+
+#### Feature
+
+* packer 1.10 upgrade (#22) (b5cb7cbd)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (ac3f8dfb)
+
+
 ## 1.5.1 (2023-12-19)
 
 #### Bug Fixes
