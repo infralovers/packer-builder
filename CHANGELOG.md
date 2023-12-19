@@ -1,3 +1,14 @@
+## 1.5.1 (2023-12-19)
+
+#### Bug Fixes
+
+* remove user (#23) (ad9cb34b)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (272f0862)
+
+
 ## 1.5.0 (2023-11-09)
 
 #### Feature
