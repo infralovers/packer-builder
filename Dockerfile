@@ -1,6 +1,6 @@
 ARG TERRAFORM_VERSION=1.5.7
 ARG MONDOO_VERSION=9.0.2
-ARG PACKER_VERSION=1.9.4
+ARG PACKER_VERSION=1.10
 ARG YQ_VERSION=4.35.2
 ARG TERRAFORM_DOCS_VERSION=latest
 ARG TFLINT_VERSION=latest
@@ -16,7 +16,6 @@ FROM docker.io/aquasec/tfsec-alpine:$TFSEC_VERSION as tfsec
 FROM docker.io/hashicorp/vault:${VAULT_VERSION} as vault
 
 FROM docker.io/hashicorp/terraform:$TERRAFORM_VERSION as tf
-
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache perl aws-cli bash git jq curl gettext ruby-dev ruby-bundler make gcc g++ libc-dev ansible musl-dev python3-dev py3-pip py3-ruamel.yaml py3-tomli libffi-dev openssl-dev cargo
