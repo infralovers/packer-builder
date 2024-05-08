@@ -17,7 +17,7 @@ jobs:
       BOT_ACCESS_TOKEN: "${{ fromJSON(secrets.VAULT_KV_1D187965_OP_GITHUB_INFRALOVERS).PAT }}"
       MONDOO_SERVICE_ACCOUNT: "${{ fromJson(secrets.VAULT_KV_1D187965_OP_MONDOO_PACKER_AGENT).password }}"
     with:
-      dockerfile: dockerfoo/Dockerfile
+      dockerfile: Dockerfile
       score: 50
       platforms: "linux/amd64, linux/arm64"
       release: true
