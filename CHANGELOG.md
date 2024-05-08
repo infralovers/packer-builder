@@ -1,3 +1,14 @@
+## 1.6.1 (2024-05-08)
+
+#### Bug Fixes
+
+* Change workflow (#24) (20892483)
+
+#### Chores
+
+* **ci:** commit changes from go-semantic-release (5f74366e)
+
+
 ## 1.6.0 (2023-12-19)
 
 #### Feature
