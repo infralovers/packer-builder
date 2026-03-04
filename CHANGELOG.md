@@ -1,3 +1,10 @@
+## 1.6.2 (2026-03-04)
+
+#### Bug Fixes
+
+* update workflow (4f92cd86)
+
+
 ## 1.6.1 (2024-05-08)
 
 #### Bug Fixes
